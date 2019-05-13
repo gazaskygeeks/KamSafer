@@ -1,16 +1,20 @@
 require('env2')('.env');
 
+const parseDbUrl = require('parse-database-url');
+
 const Sequelize = require('sequelize');
 
+const { DB_URL } = process.env;
+
 const {
-  DB_NAME, DB_USER, DB_PASSWORD, DB_DIALECT, DB_HOST,
-} = process.env;
+  driver, user, password, database, host,
+} = parseDbUrl(DB_URL);
 
-const ssl = DB_HOST !== 'localhost';
+const ssl = host !== 'localhost';
 
-module.exports = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  dialect: DB_DIALECT,
+module.exports = new Sequelize(database, user, password, {
+  host,
+  dialect: driver,
   dialectOptions: { ssl },
   operatorsAliases: false,
   logging: false,

@@ -9,6 +9,8 @@ exports.post = (req, res) => {
     bcrypt.compare(password, hashed, (err, match) => {
       if (err) {
         res.json({ logged: false });
+      } else if (!match) {
+        res.json({ logged: false });
       } else {
         const token = jwt.sign(
           {
