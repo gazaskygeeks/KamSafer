@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 const cookiesValidator = (req, res, next) => {
-  const { SECRET, username } = process.env;
+  const { SECRET, DB_USERNAME } = process.env;
   jwt.verify(req.cookies.logged_in, SECRET, (error, result) => {
     if (error) res.status(500);
-    else if (result.username === username) {
+    else if (result.username === DB_USERNAME) {
       req.id = result.id;
       next();
       return;
