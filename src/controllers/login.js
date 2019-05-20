@@ -4,9 +4,9 @@ require('env2')('.env');
 
 exports.post = (req, res) => {
   const { username, password } = req.body;
-  const { hashed, SECRET, username: userhere } = process.env;
-  if (userhere === username) {
-    bcrypt.compare(password, hashed, (err, match) => {
+  const { DB_HASHED, SECRET, DB_USERNAME } = process.env;
+  if (DB_USERNAME === username) {
+    bcrypt.compare(password, DB_HASHED, (err, match) => {
       if (err) {
         res.json({ logged: false });
       } else if (!match) {

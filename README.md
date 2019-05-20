@@ -50,9 +50,9 @@ KamSafer is a web app that enables you to log your trip's information. The purpo
 1. run `git clone` of this repo and `cd` into the folder
 1. Provision a postgres database (either locally or remotely)
 1. In the root directory create a `.env` file
-   1. Add the following database environment variables, taking the values from the database you set up in the previous step: `DB_DIALECT, DB_HOST, DB_NAME,DB_PASSWORD, DB_USER`
+   1. Add the database url as an environment variable, `DB_URL`
    1. A jwt secret variable, named `SECRET`
-   1. User log in variables, `USERNAME` and `HASHED`. To generate the hash run `node lib/hasher [plaintext password]` and copy the printed value.
+   1. User log in variables, `DB_USERNAME` and `DB_HASHED`. To generate the hash run `node lib/hasher [plaintext password]` and copy the printed value.
 1. commands (from root):
    - `npm i` install server dependencies
    - `npm start` run production server

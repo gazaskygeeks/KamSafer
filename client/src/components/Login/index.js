@@ -89,7 +89,8 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      failed: false
+      failed: false,
+      loading: false
     };
   }
   handleInputChange = ({ target: { name, value } }) => {
@@ -102,14 +103,19 @@ class Login extends Component {
     const { history } = this.props;
     const { username, password } = this.state;
     event.preventDefault();
+    this.setState({loading: true, username:"", password:""})
     loginHelper({ username, password })
       .then(result => {
+        this.setState({
+          loading:false        });
         if (result.logged) {
           history.push("/cars");
         } else {
           this.setState({
             failed: true
           });
+          alert(`Wrong username/password combination`);
+          this.setState({username:"", password:""})
         }
       })
       .catch(error => {
@@ -128,7 +134,7 @@ class Login extends Component {
               <img src={KS_logo} className={classes.KSLogo} />
             </Avatar>
 
-            <form className={classes.form} onSubmit={this.handleSubmit}>
+            {this.state.loading ? <p>Logging In... </p> : <form className={classes.form} onSubmit={this.handleSubmit}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="username">Username</InputLabel>
                 <Input
@@ -159,7 +165,7 @@ class Login extends Component {
               >
                 Log in
               </Button>
-            </form>
+            </form>}
             <img className={classes.Mercy} alt="logo" src={Mercy} />
           </Paper>
         </main>
