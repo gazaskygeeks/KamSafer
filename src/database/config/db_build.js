@@ -1,9 +1,9 @@
 const { car } = require('../models');
 const seq = require('./db_connection.js');
 
-const { DB_HOST } = process.env;
+const { DB_URL } = process.env;
 
-if (DB_HOST !== 'localhost') {
+if (!DB_URL.includes('localhost')) {
   throw Error('Database is not local, aborting to avoid wiping Production DB');
 }
 
@@ -15,7 +15,7 @@ const carsArray = [
     last_log_km: 0,
   },
   {
-    model_color: 'Magenta Merc',
+    model_color: 'Magenta Mercedes',
     car_no: '31-43-7Z',
     owner: 'Anam',
     last_log_km: 0,
@@ -28,9 +28,9 @@ const carsArray = [
   },
 ];
 
-seq
+car
   .sync({ force: true })
-  .then(() => {
+  .then((res) => {
     console.log('synced');
     car
       .bulkCreate(carsArray)
